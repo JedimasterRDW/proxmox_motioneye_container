@@ -32,19 +32,19 @@ apt-get -qqy upgrade &>/dev/null
 # Install prerequisites
 # Install motion ffmpeg v4l-utils
 msg "Installing necessary components..."
-apt-get -y install motion ffmpeg v4l-utils &>/dev/null
+apt-get -y install motion ffmpeg v4l-utils
 
 # Update
 msg "Update..."
-apt-get update &>/dev/null
+apt-get update
 
 # Install the dependencies
 msg "Installing dependencies..."
-apt-get -y install python-pip python-dev python-setuptools curl libssl-dev libcurl4-openssl-dev libjpeg-dev libz-dev &>/dev/null
+apt-get -y install python-pip python-dev python-setuptools curl libssl-dev libcurl4-openssl-dev libjpeg-dev libz-dev
 
 # Install MotionEye
 msg "Installing MotionEye..."
-yes | pip install motioneye &>/dev/null
+yes | pip install motioneye
 
 # Prepare the configuration
 msg "Prepare the configuration..."
