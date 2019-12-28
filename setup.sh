@@ -44,7 +44,7 @@ apt-get -y install python-pip python-dev python-setuptools curl libssl-dev libcu
 
 # Install MotionEye
 msg "Installing MotionEye..."
-yes | pip install motioneye
+yes 2>/dev/null | pip install motioneye
 
 # Prepare the configuration
 msg "Prepare the configuration..."
