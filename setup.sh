@@ -35,9 +35,11 @@ msg "Installing necessary components..."
 apt-get -y install motion ffmpeg v4l-utils &>/dev/null
 
 # Update
+msg "Update..."
 apt-get update &>/dev/null
 
 # Install the dependencies
+msg "Installing dependencies..."
 apt-get -y install python-pip python-dev python-setuptools curl libssl-dev libcurl4-openssl-dev libjpeg-dev libz-dev &>/dev/null
 
 # Install MotionEye
