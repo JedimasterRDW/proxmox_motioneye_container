@@ -42,8 +42,8 @@ apt-get update &>/dev/null
 msg "Installing dependencies..."
 apt-get -y install python-pip python-dev python-setuptools curl libssl-dev libcurl4-openssl-dev libjpeg-dev libz-dev &>/dev/null
 
-# Add 
-# export PATH=$PATH:~/.local/bin
+# Add /usr/local/bin to PATH
+export PATH=$PATH:/usr/local/bin
 
 # Install MotionEye
 msg "Installing MotionEye..."
