@@ -47,7 +47,8 @@ export PATH=$PATH:/usr/local/bin
 
 # Install MotionEye
 msg "Installing MotionEye..."
-yes 2>/dev/null | pip install motioneye
+# yes 2>/dev/null | 
+sudo pip install motioneye
 
 # Prepare the configuration
 msg "Prepare the configuration..."
