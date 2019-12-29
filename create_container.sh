@@ -103,16 +103,12 @@ ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
 
 # Create LXC
 msg "Creating LXC container..."
-pvesm alloc $STORAGE $CTID $DISK 4G --format ${DISK_FORMAT:-raw} >/dev/null
-if [ "$STORAGE_TYPE" != "zfspool" ]; then
-  mkfs.ext4 $(pvesm path $ROOTFS) &>/dev/null
-fi
 ARCH=$(dpkg --print-architecture)
 HOSTNAME=motioneye
 TEMPLATE_STRING="local:vztmpl/${TEMPLATE}"
 pct create $CTID $TEMPLATE_STRING -arch $ARCH -cores 1 -hostname $HOSTNAME \
   -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 -ostype $OSTYPE \
-  -password "motioneye" -rootfs $ROOTFS -storage $STORAGE --unprivileged 1 >/dev/null
+  -password "motioneye" -storage $STORAGE -unprivileged 1 >/dev/null
 
 # Set container timezone to match host
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
