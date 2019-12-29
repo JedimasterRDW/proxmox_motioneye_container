@@ -129,5 +129,8 @@ msg "
 MotionEye is reachable by going to the following URLs.
 
       http://${IP}:8765
-
+      
+      MotiuonEye Login: admin
+              Password: admin
+              
 "
