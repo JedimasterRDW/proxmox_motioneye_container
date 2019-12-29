@@ -35,7 +35,6 @@ msg "Installing necessary components..."
 apt-get -y install motion ffmpeg v4l-utils &>/dev/null
 
 # Update
-msg "Update..."
 apt-get update &>/dev/null
 
 # Install the dependencies
@@ -48,7 +47,7 @@ export PATH=$PATH:/usr/local/bin
 # Install MotionEye
 msg "Installing MotionEye..."
 # yes 2>/dev/null | 
-pip install motioneye
+pip install motioneye >/dev/null
 
 # Prepare the configuration
 msg "Prepare the configuration..."
