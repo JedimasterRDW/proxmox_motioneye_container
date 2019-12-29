@@ -45,26 +45,11 @@ function cleanup() {
   popd >/dev/null
   rm -rf $TEMP_DIR
 }
-function load_module() {
-  if ! $(lsmod | grep -Fq $1); then
-    modprobe $1 &>/dev/null || \
-      die "Failed to load '$1' module."
-  fi
-  MODULES_PATH=/etc/modules
-  if ! $(grep -Fxq "$1" $MODULES_PATH); then
-    echo "$1" >> $MODULES_PATH || \
-      die "Failed to add '$1' module to load at boot."
-  fi
-}
 TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 # Download setup script
 wget -qL https://raw.githubusercontent.com/JedimasterRDW/proxmox_motioneye_container/master/setup.sh
-
-# Detect modules and automatically load at boot
-load_module aufs
-load_module overlay
 
 # Select storage location
 STORAGE_LIST=( $(pvesm status -content rootdir | awk 'NR>1 {print $1}') )
@@ -119,30 +104,15 @@ ROOTFS=${STORAGE}:${DISK_REF-}${DISK}
 # Create LXC
 msg "Creating LXC container..."
 pvesm alloc $STORAGE $CTID $DISK 4G --format ${DISK_FORMAT:-raw} >/dev/null
-if [ "$STORAGE_TYPE" == "zfspool" ]; then
-  warn "Some addons may not work due to ZFS not supporting 'fallocate'."
-else
+if [ "$STORAGE_TYPE" != "zfspool" ]; then
   mkfs.ext4 $(pvesm path $ROOTFS) &>/dev/null
 fi
 ARCH=$(dpkg --print-architecture)
 HOSTNAME=motioneye
 TEMPLATE_STRING="local:vztmpl/${TEMPLATE}"
-pct create $CTID $TEMPLATE_STRING -arch $ARCH -cores 1 -features nesting=1 \
-  -hostname $HOSTNAME -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 \
-  -ostype $OSTYPE -password "motioneye" -rootfs $ROOTFS -storage $STORAGE >/dev/null
-
-# Modify LXC permissions to support Docker
-LXC_CONFIG=/etc/pve/lxc/${CTID}.conf
-cat <<EOF >> $LXC_CONFIG
-lxc.cgroup.devices.allow: a
-lxc.cap.drop:
-EOF
-
-# Add access to ttyACM,ttyS,ttyUSB,net/tun devices
-cat <<'EOF' >> $LXC_CONFIG
-lxc.autodev: 1
-lxc.hook.autodev: bash -c 'for dev in $(ls /dev/tty{ACM,S,USB}* 2>/dev/null) $([ -d "/dev/bus" ] && find /dev/bus -type c) /dev/mem /dev/net/tun; do mkdir -p $(dirname ${LXC_ROOTFS_MOUNT}${dev}); for link in $(udevadm info --query=property $dev | sed -n "s/DEVLINKS=//p"); do mkdir -p ${LXC_ROOTFS_MOUNT}$(dirname $link); cp -dR $link ${LXC_ROOTFS_MOUNT}${link}; done; cp -dR $dev ${LXC_ROOTFS_MOUNT}${dev}; done'
-EOF
+pct create $CTID $TEMPLATE_STRING -arch $ARCH -cores 1 -hostname $HOSTNAME \
+  -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 -ostype $OSTYPE \
+  -password "motioneye" -rootfs $ROOTFS -storage $STORAGE --unprivileged 1 >/dev/null
 
 # Set container timezone to match host
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
