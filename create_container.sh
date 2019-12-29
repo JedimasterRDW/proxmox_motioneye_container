@@ -130,7 +130,7 @@ MotionEye is reachable by going to the following URLs.
 
       http://${IP}:8765
       
-      MotiuonEye Login: admin
-              Password: admin
+  MotiuonEye WebUI Login: admin
+                Password: admin
               
 "
