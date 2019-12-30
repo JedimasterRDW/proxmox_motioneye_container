@@ -13,7 +13,7 @@ I made this script with the help of whiskerz007 and a lot of thanks for that!
 It was nice working together with you.
 To see all his great work visit https://github.com/whiskerz007
 
-## How to Add a MotionEye camara to Home Assistant
+## How to Add a MotionEye camera to Home Assistant
 You have to put the following code to you configuration.yaml file and add your MotionEye/Camara information
 ```
 camera: #verify that you don't have it in your configuration.yaml already, if you do so, skip this line.
