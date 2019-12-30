@@ -20,7 +20,7 @@ camera: #verify that you don't have it in your configuration.yaml already, if yo
   - platform: mjpeg
     name: MotionEye Test Cam # your camara name
     still_image_url: # copy from your motionEye page - Video streaming - Snapshot URL
-    mjpeg_url: # MotionEye IP address with the port that you have configured (exp: http://192.168.1.123:8888) 
+    mjpeg_url: # MotionEye IP address with the port that you have configured (e.g: http://192.168.1.123:8888) 
     username: !secret motion_user # dont forget to put the name and password in your secret file
     password: !secret motion_pass
 ```
