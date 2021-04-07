@@ -33,3 +33,13 @@ Login on the terminal of the container and run the following command
 pip install --upgrade motioneye
 ```
 It wil let you know what it updates if it is necessary and then your done.
+
+## Change container root password
+To be more secure change the default password
+
+Login to the terminal of the container and type in
+```
+passwd
+```
+Hit enter and it wil ask 2 times for the new password.
+after that type "Exit" and the new password is working
