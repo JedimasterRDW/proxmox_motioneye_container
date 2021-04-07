@@ -26,3 +26,10 @@ camera: #verify that you don't have it in your configuration.yaml already, if yo
 ```
 when your done with the configuration.yaml file save it and restart.
 After reboot you can add the camera to the Lovelace UI
+
+## How to update MotionEye
+Login on the terminal of the container and run the following command
+```
+pip install --upgrade motioneye
+```
+It wil let you know what it pdates if it is necessary and then your done.
