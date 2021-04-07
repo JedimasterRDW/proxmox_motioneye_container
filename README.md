@@ -32,4 +32,4 @@ Login on the terminal of the container and run the following command
 ```
 pip install --upgrade motioneye
 ```
-It wil let you know what it pdates if it is necessary and then your done.
+It wil let you know what it updates if it is necessary and then your done.
