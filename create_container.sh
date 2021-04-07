@@ -132,5 +132,8 @@ MotionEye is reachable by going to the following URLs.
       
   MotiuonEye WebUI Login: admin
                 Password: "No Password"
+  
+  MotiuonEye SSH Login: root
+                Password: motioneye
               
 "
