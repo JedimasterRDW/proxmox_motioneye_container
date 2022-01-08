@@ -32,14 +32,22 @@ apt-get -qqy upgrade &>/dev/null
 # Install prerequisites
 # Install motion ffmpeg v4l-utils
 msg "Installing necessary components..."
-apt-get -y install motion ffmpeg v4l-utils &>/dev/null
+apt-get install motion ffmpeg v4l-utils -y &>/dev/null
+systemctl stop motion
+systemctl disable motion
+
+# Install pip2
+msg "Installing pip2..."
+apt-get install python2 curl -y &>/dev/null
+curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py &>/dev/null
+python2 get-pip.py &>/dev/null
 
 # Update
 apt-get update &>/dev/null
 
 # Install the dependencies
 msg "Installing dependencies..."
-apt-get -y install python-pip python-dev python-setuptools curl libssl-dev libcurl4-openssl-dev libjpeg-dev libz-dev &>/dev/null
+apt-get install python-dev-is-python2 python-setuptools libssl-dev libcurl4-openssl-dev libjpeg-dev zlib1g-dev libffi-dev libzbar-dev libzbar0 -y &>/dev/null
 
 # Add /usr/local/bin to PATH
 export PATH=$PATH:/usr/local/bin
@@ -47,7 +55,7 @@ export PATH=$PATH:/usr/local/bin
 # Install MotionEye
 msg "Installing MotionEye..."
 # yes 2>/dev/null | 
-pip install motioneye &>/dev/null
+pip2 install motioneye &>/dev/null
 
 # Prepare the configuration
 msg "Prepare the configuration..."
